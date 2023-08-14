@@ -27,6 +27,12 @@ is31.enable = True
 for i in range(18 * 11):
     is31[i] = 0xFF
 
+# SLEEP# pin. Low if the host is sleeping
+sleep_pin = digitalio.DigitalInOut(board.GP0)
+sleep_pin.direction = digitalio.Direction.INPUT
+
 # Keep in the script to keep the LED controller on
 while True:
-    time.sleep(0.01)
+    # Turn LEDs off when SLEEP# pin is low
+    is31.enable = sleep_pin.value
+    time.sleep(0.1)
