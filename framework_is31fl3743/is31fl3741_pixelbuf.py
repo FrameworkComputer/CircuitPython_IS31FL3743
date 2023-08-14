@@ -9,7 +9,7 @@
 # Based on the Neopixel python library
 
 """
-`is31fl3741_pixelbuf` - IS31FL3741 PixelBuf driver
+`is31fl3743_pixelbuf` - IS31FL3743 PixelBuf driver
 ====================================================
 
 * Author(s): Mark Komus, Damien P. George, Scott Shawcroft, Carter Nelson, Rose Hooper
@@ -21,14 +21,14 @@ try:
     # Used only for typing
     from typing import Optional, Type, Union
     from types import TracebackType
-    import is31fl3741
-    from . import IS31FL3741
+    import framework_is31fl3743
+    from . import IS31FL3743
 except ImportError:
     pass
 
 
 __version__ = "0.0.0+auto.0"
-# __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_IS31FL3741.git"
+# __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_IS31FL3743.git"
 
 
 # Pixel color order constants
@@ -44,11 +44,11 @@ GRBW = "GRBW"
 """Green Red Blue White"""
 
 
-class IS31FL3741_PixelBuf(adafruit_pixelbuf.PixelBuf):
+class IS31FL3743_PixelBuf(adafruit_pixelbuf.PixelBuf):
     """
-    A sequence of LEDs controlled by an IS31FL3741 driver.
+    A sequence of LEDs controlled by an IS31FL3743 driver.
 
-    :param ~is31fl3741.IS31FL3741 is31: the IS31FL3741 device to output with
+    :param ~is31fl3743.IS31FL3743 is31: the IS31FL3743 device to output with
     :param ~Tuple[int, ...] mapping: map the pixels in the buffer to the order addressed
         by the driver chip
     :param int bpp: Bytes per pixel. 3 for RGB and 4 for RGBW pixels.
@@ -57,9 +57,9 @@ class IS31FL3741_PixelBuf(adafruit_pixelbuf.PixelBuf):
     :param bool auto_write: True if the neopixels should immediately change when set. If False,
       `show` must be called explicitly.
     :param str pixel_order: Set the pixel color channel order. GRBW is set by default.
-    :param bool init: True if the IS31FL3741 chip should be initialized.
+    :param bool init: True if the IS31FL3743 chip should be initialized.
 
-    .. py:method:: IS31FL3741_PixelBuf.show()
+    .. py:method:: IS31FL3743_PixelBuf.show()
 
         Shows the new colors on the pixels themselves if they haven't already
         been autowritten.
@@ -67,7 +67,7 @@ class IS31FL3741_PixelBuf(adafruit_pixelbuf.PixelBuf):
         The colors may or may not be showing after this function returns because
         it may be done asynchronously.
 
-    .. py:method:: IS31FL3741_PixelBuf.fill(color)
+    .. py:method:: IS31FL3743_PixelBuf.fill(color)
 
         Colors all pixels the given ***color***.
 
@@ -79,7 +79,7 @@ class IS31FL3741_PixelBuf(adafruit_pixelbuf.PixelBuf):
 
     def __init__(
         self,
-        is31: Union[is31fl3741.IS31FL3741, IS31FL3741],
+        is31: Union[framework_is31fl3743.IS31FL3743, IS31FL3743],
         mapping: tuple,
         *,
         addr: int = 0x30,
@@ -101,7 +101,7 @@ class IS31FL3741_PixelBuf(adafruit_pixelbuf.PixelBuf):
             n, brightness=brightness, byteorder=pixel_order, auto_write=auto_write
         )
 
-        self.is31fl3741 = is31
+        self.is31fl3743 = is31
         self.addr = addr
         if not isinstance(mapping, tuple):
             raise AttributeError("Mapping must be a tuple")
@@ -131,14 +131,14 @@ class IS31FL3741_PixelBuf(adafruit_pixelbuf.PixelBuf):
 
     def initialize(self) -> None:
         """Initialize"""
-        self.is31fl3741.reset()
+        self.is31fl3743.reset()
 
         # Set scaling for all LEDs to maximum
         for led in range(352):
-            self.is31fl3741.set_led(led, 0xFF, 2)
+            self.is31fl3743.set_led(led, 0xFF, 2)
 
-        self.is31fl3741.set_global_current(0xFE)
-        self.is31fl3741.enable()
+        self.is31fl3743.set_global_current(0xFE)
+        self.is31fl3743.enable()
 
     @property
     def n(self) -> int:
@@ -154,4 +154,4 @@ class IS31FL3741_PixelBuf(adafruit_pixelbuf.PixelBuf):
         self.show()
 
     def _transmit(self, buffer: bytearray) -> None:
-        self.is31fl3741.write(self.mapping, buffer)
+        self.is31fl3743.write(self.mapping, buffer)

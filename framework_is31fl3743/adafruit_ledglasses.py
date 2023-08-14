@@ -3,10 +3,10 @@
 # SPDX-License-Identifier: MIT
 
 """
-`adafruit_is31fl3741.adafruit_rgbmatrixqt`
+`framework_is31fl3743.adafruit_rgbmatrixqt`
 ====================================================
 
-CircuitPython driver for the Adafruit IS31FL3741 RGB Matrix QT board
+CircuitPython driver for the Adafruit IS31FL3743 RGB Matrix QT board
 
 
 * Author(s): ladyada, Rose Hooper
@@ -24,8 +24,13 @@ Implementation Notes
 """
 from struct import unpack_from  # pylint: disable=no-name-in-module
 
-from adafruit_is31fl3741 import _IS3741_ADDR_DEFAULT, NO_BUFFER, IS3741_BGR, MUST_BUFFER
-from . import IS31FL3741_colorXY
+from framework_is31fl3743 import (
+    _IS3743_ADDR_DEFAULT,
+    NO_BUFFER,
+    IS3743_BGR,
+    MUST_BUFFER,
+)
+from . import IS31FL3743_colorXY
 
 try:
     # Used only for typing
@@ -42,7 +47,7 @@ class BaseRing:
 
     ledmap_bytes = b""
 
-    def __init__(self, is31_controller: IS31FL3741_colorXY, order: int):
+    def __init__(self, is31_controller: IS31FL3743_colorXY, order: int):
         self._is31 = is31_controller
         self.r_offset = (order >> 4) & 3
         self.g_offset = (order >> 2) & 3
@@ -147,7 +152,7 @@ class Left_Ring(BaseRing):
     )
 
 
-class LED_Glasses(IS31FL3741_colorXY):
+class LED_Glasses(IS31FL3743_colorXY):
     """Class representing LED Glasses"""
 
     # 'missing' pixels, such as the nose bridge, are assigned to indices
@@ -249,9 +254,9 @@ class LED_Glasses(IS31FL3741_colorXY):
     def __init__(
         self,
         i2c: busio.I2C,
-        address: int = _IS3741_ADDR_DEFAULT,
+        address: int = _IS3743_ADDR_DEFAULT,
         allocate: int = NO_BUFFER,
-        order: int = IS3741_BGR,
+        order: int = IS3743_BGR,
     ):
         super().__init__(i2c, 18, 5, address=address, allocate=allocate, order=order)
 

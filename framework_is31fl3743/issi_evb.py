@@ -3,10 +3,10 @@
 # SPDX-License-Identifier: MIT
 
 """
-`adafruit_is31fl3741.issi_evb`
+`framework_is31fl3743.issi_evb`
 ====================================================
 
-CircuitPython driver for the IS31FL3741 ISSI Eval Board
+CircuitPython driver for the IS31FL3743 ISSI Eval Board
 
 
 * Author(s): ladyada
@@ -16,8 +16,8 @@ Implementation Notes
 
 **Hardware:**
 
-* `ISSI IS31FL3741 eval board
-  <https://www.digikey.com/en/products/detail/issi-integrated-silicon-solution-inc/IS31FL3741-QFLS4-EB/10243951>`_
+* `ISSI IS31FL3743 eval board
+  <https://www.digikey.com/en/products/detail/issi-integrated-silicon-solution-inc/IS31FL3743-QFLS4-EB/10243951>`_
 
 **Software and Dependencies:**
 
@@ -27,8 +27,8 @@ Implementation Notes
 """
 
 # imports
-from adafruit_is31fl3741 import _IS3741_ADDR_DEFAULT, NO_BUFFER, IS3741_BGR
-from adafruit_is31fl3741 import IS31FL3741_colorXY
+from framework_is31fl3743 import _IS3743_ADDR_DEFAULT, NO_BUFFER, IS3743_BGR
+from framework_is31fl3743 import IS31FL3743_colorXY
 
 try:
     # Used only for typing
@@ -38,15 +38,15 @@ except ImportError:
     pass
 
 
-class ISSI_EVB(IS31FL3741_colorXY):
-    """Supports the ISSI IS31FL3741 eval board"""
+class ISSI_EVB(IS31FL3743_colorXY):
+    """Supports the ISSI IS31FL3743 eval board"""
 
     def __init__(
         self,
         i2c: busio.I2C,
-        address: int = _IS3741_ADDR_DEFAULT,
+        address: int = _IS3743_ADDR_DEFAULT,
         allocate: int = NO_BUFFER,
-        order: int = IS3741_BGR,
+        order: int = IS3743_BGR,
     ):
         super().__init__(i2c, 9, 13, address=address, allocate=allocate, order=order)
 

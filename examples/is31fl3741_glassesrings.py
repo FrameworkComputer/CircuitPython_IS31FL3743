@@ -3,12 +3,12 @@
 
 import board
 from rainbowio import colorwheel
-from adafruit_is31fl3741.adafruit_ledglasses import LED_Glasses
-import adafruit_is31fl3741
+from framework_is31fl3743.adafruit_ledglasses import LED_Glasses
+import framework_is31fl3743
 
 i2c = board.I2C()  # uses board.SCL and board.SDA
 # i2c = board.STEMMA_I2C()  # For using the built-in STEMMA QT connector on a microcontroller
-glasses = LED_Glasses(i2c, allocate=adafruit_is31fl3741.MUST_BUFFER)
+glasses = LED_Glasses(i2c, allocate=framework_is31fl3743.MUST_BUFFER)
 
 wheeloffset = 0
 while True:

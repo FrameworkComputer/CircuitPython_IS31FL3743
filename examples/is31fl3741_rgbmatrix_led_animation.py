@@ -3,21 +3,21 @@
 # SPDX-License-Identifier: MIT
 """
 This example repeatedly displays all available animations
-on the IS31FL3741 13x9 RGB Matrix, at a five second interval.
+on the IS31FL3743 13x9 RGB Matrix, at a five second interval.
 """
 import board
 from adafruit_led_animation.animation.blink import Blink
 from adafruit_led_animation.color import PINK
-from adafruit_is31fl3741 import PREFER_BUFFER
-from adafruit_is31fl3741.adafruit_rgbmatrixqt import Adafruit_RGBMatrixQT
-from adafruit_is31fl3741.is31fl3741_pixelbuf import IS31FL3741_PixelBuf
+from framework_is31fl3743 import PREFER_BUFFER
+from framework_is31fl3743.adafruit_rgbmatrixqt import Adafruit_RGBMatrixQT
+from framework_is31fl3743.is31fl3743_pixelbuf import IS31FL3743_PixelBuf
 
 
 # i2c = board.I2C()
 i2c = board.STEMMA_I2C()
 
 ########################################################################
-# Instantiate the nice IS31FL3741
+# Instantiate the nice IS31FL3743
 ########################################################################
 
 is31 = Adafruit_RGBMatrixQT(i2c, allocate=PREFER_BUFFER)
@@ -39,7 +39,7 @@ LEDS_MAP = tuple(
         for address in Adafruit_RGBMatrixQT.pixel_addrs(x, y)
     )
 )
-pixels = IS31FL3741_PixelBuf(is31, LEDS_MAP, init=False, auto_write=False)
+pixels = IS31FL3743_PixelBuf(is31, LEDS_MAP, init=False, auto_write=False)
 
 ########################################################################
 # Run animations

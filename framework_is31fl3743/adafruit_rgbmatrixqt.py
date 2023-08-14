@@ -3,10 +3,10 @@
 # SPDX-License-Identifier: MIT
 
 """
-`adafruit_is31fl3741.adafruit_rgbmatrixqt`
+`framework_is31fl3743.adafruit_rgbmatrixqt`
 ====================================================
 
-CircuitPython driver for the Adafruit IS31FL3741 RGB Matrix QT board
+CircuitPython driver for the Adafruit IS31FL3743 RGB Matrix QT board
 
 
 * Author(s): ladyada
@@ -24,8 +24,8 @@ Implementation Notes
 """
 
 # imports
-from adafruit_is31fl3741 import _IS3741_ADDR_DEFAULT, NO_BUFFER, IS3741_BGR
-from . import IS31FL3741_colorXY
+from framework_is31fl3743 import _IS3743_ADDR_DEFAULT, NO_BUFFER, IS3743_BGR
+from . import IS31FL3743_colorXY
 
 try:
     # Used only for typing
@@ -35,17 +35,17 @@ except ImportError:
     pass
 
 
-class Adafruit_RGBMatrixQT(IS31FL3741_colorXY):
-    """Supports the Adafruit STEMMA QT IS31FL3741 RGB LED matrix."""
+class Adafruit_RGBMatrixQT(IS31FL3743_colorXY):
+    """Supports the Adafruit STEMMA QT IS31FL3743 RGB LED matrix."""
 
     rowmap = [8, 5, 4, 3, 2, 1, 0, 7, 6]
 
     def __init__(
         self,
         i2c: busio.I2C,
-        address: int = _IS3741_ADDR_DEFAULT,
+        address: int = _IS3743_ADDR_DEFAULT,
         allocate: int = NO_BUFFER,
-        order: int = IS3741_BGR,
+        order: int = IS3743_BGR,
     ):
         super().__init__(i2c, 13, 9, address=address, allocate=allocate, order=order)
 

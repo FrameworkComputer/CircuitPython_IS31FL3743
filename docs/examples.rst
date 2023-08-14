@@ -3,8 +3,8 @@ Simple test
 
 Ensure your device works with this simple test.
 
-.. literalinclude:: ../examples/is31fl3741_simpletest.py
-    :caption: examples/is31fl3741_simpletest.py
+.. literalinclude:: ../examples/is31fl3743_simpletest.py
+    :caption: examples/is31fl3743_simpletest.py
     :linenos:
 
 Matrix Examples

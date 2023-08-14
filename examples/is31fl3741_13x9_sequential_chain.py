@@ -5,9 +5,9 @@
 import board
 from adafruit_led_animation.sequence import AnimationSequence
 from adafruit_led_animation.animation.rainbowchase import RainbowChase
-from adafruit_is31fl3741 import PREFER_BUFFER
-from adafruit_is31fl3741.adafruit_rgbmatrixqt import Adafruit_RGBMatrixQT
-from adafruit_is31fl3741.is31fl3741_pixelbuf import IS31FL3741_PixelBuf
+from framework_is31fl3743 import PREFER_BUFFER
+from framework_is31fl3743.adafruit_rgbmatrixqt import Adafruit_RGBMatrixQT
+from framework_is31fl3743.is31fl3743_pixelbuf import IS31FL3743_PixelBuf
 
 # Initialize I2C Bus
 i2c = board.STEMMA_I2C()
@@ -45,16 +45,16 @@ LEDS_MAP = tuple(
         for address in Adafruit_RGBMatrixQT.pixel_addrs(x, y)
     )
 )
-Matrix30_pixels = IS31FL3741_PixelBuf(Matrix30, LEDS_MAP, init=False, auto_write=False)
+Matrix30_pixels = IS31FL3743_PixelBuf(Matrix30, LEDS_MAP, init=False, auto_write=False)
 Matrix30_chase = RainbowChase(Matrix30_pixels, speed=0.1, size=1, spacing=3, step=8)
 
-Matrix31_pixels = IS31FL3741_PixelBuf(Matrix31, LEDS_MAP, init=False, auto_write=False)
+Matrix31_pixels = IS31FL3743_PixelBuf(Matrix31, LEDS_MAP, init=False, auto_write=False)
 Matrix31_chase = RainbowChase(Matrix31_pixels, speed=0.1, size=1, spacing=3, step=8)
 
-Matrix32_pixels = IS31FL3741_PixelBuf(Matrix32, LEDS_MAP, init=False, auto_write=False)
+Matrix32_pixels = IS31FL3743_PixelBuf(Matrix32, LEDS_MAP, init=False, auto_write=False)
 Matrix32_chase = RainbowChase(Matrix32_pixels, speed=0.1, size=1, spacing=3, step=8)
 
-Matrix33_pixels = IS31FL3741_PixelBuf(Matrix33, LEDS_MAP, init=False, auto_write=False)
+Matrix33_pixels = IS31FL3743_PixelBuf(Matrix33, LEDS_MAP, init=False, auto_write=False)
 Matrix33_chase = RainbowChase(Matrix33_pixels, speed=0.1, size=1, spacing=3, step=8)
 
 # Run animation on each 13x9 matrix sequentially

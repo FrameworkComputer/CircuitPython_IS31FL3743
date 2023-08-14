@@ -4,7 +4,7 @@
 """
 LED glasses mappings
 """
-# Maps to link IS31FL3741 LEDs to pixels
+# Maps to link IS31FL3743 LEDs to pixels
 
 # Full LED glasses 18 x 5 matrix
 glassesmatrix_ledmap = (

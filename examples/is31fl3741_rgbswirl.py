@@ -4,12 +4,12 @@
 import board
 from rainbowio import colorwheel
 
-from adafruit_is31fl3741.adafruit_rgbmatrixqt import Adafruit_RGBMatrixQT
-import adafruit_is31fl3741
+from framework_is31fl3743.adafruit_rgbmatrixqt import Adafruit_RGBMatrixQT
+import framework_is31fl3743
 
 i2c = board.I2C()  # uses board.SCL and board.SDA
 # i2c = board.STEMMA_I2C()  # For using the built-in STEMMA QT connector on a microcontroller
-is31 = Adafruit_RGBMatrixQT(i2c, allocate=adafruit_is31fl3741.PREFER_BUFFER)
+is31 = Adafruit_RGBMatrixQT(i2c, allocate=framework_is31fl3743.PREFER_BUFFER)
 is31.set_led_scaling(0xFF)
 is31.global_current = 0xFF
 # print("Global current is: ", is31.global_current)

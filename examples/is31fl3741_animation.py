@@ -8,8 +8,8 @@ from adafruit_led_animation.animation.sparkle import Sparkle
 from adafruit_led_animation.color import PURPLE
 from adafruit_led_animation.sequence import AnimationSequence
 
-from adafruit_is31fl3741.adafruit_ledglasses import MUST_BUFFER, LED_Glasses
-from adafruit_is31fl3741.led_glasses_animation import LED_Glasses_Animation
+from framework_is31fl3743.adafruit_ledglasses import MUST_BUFFER, LED_Glasses
+from framework_is31fl3743.led_glasses_animation import LED_Glasses_Animation
 
 i2c = board.I2C()  # uses board.SCL and board.SDA
 # i2c = board.STEMMA_I2C()  # For using the built-in STEMMA QT connector on a microcontroller
