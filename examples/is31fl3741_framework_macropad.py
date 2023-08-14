@@ -24,15 +24,23 @@ is31.set_led_scaling(int(0xFF / 1))  # Full brightness
 is31.global_current = 0xFF  # set current to max
 is31.enable = True
 
-for i in range(18 * 11):
-    is31[i] = 0xFF
-
 # SLEEP# pin. Low if the host is sleeping
 sleep_pin = digitalio.DigitalInOut(board.GP0)
 sleep_pin.direction = digitalio.Direction.INPUT
 
 # Keep in the script to keep the LED controller on
+color = 0
 while True:
-    # Turn LEDs off when SLEEP# pin is low
     is31.enable = sleep_pin.value
-    time.sleep(0.1)
+
+    # Change to a different color every iteration
+    # 0 red
+    # 1 blue
+    # 2 green
+    # 3 white
+    # 4 black/off
+    color = (color+1) % 4
+    for i in range(18 * 11):
+        is31[i] = 0xFF if color != 4 and (color == 3 or i % 3 == color) else 0x00
+
+    time.sleep(1)
