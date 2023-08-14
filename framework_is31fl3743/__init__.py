@@ -43,22 +43,23 @@ except ImportError:
 __version__ = "0.0.0+auto.0"
 __repo__ = "https://github.com/FrameworkComputer/CircuitPython_IS31FL3743.git"
 
-_IS3743_ADDR_DEFAULT = 0x30
+_IS3743_ADDR_DEFAULT = 0x20
 
 _IS3743_COMMANDREGISTER = 0xFD
 _IS3743_COMMANDREGISTERLOCK = 0xFE
-_IS3743_INTMASKREGISTER = 0xF0
-_IS3743_INTSTATUSREGISTER = 0xF1
 _IS3743_IDREGISTER = 0xFC
 
 _IS3743_FUNCREG_CONFIG = 0x00
 _IS3743_FUNCREG_GCURRENT = 0x01
-_IS3743_FUNCREG_RESET = 0x3F
+_IS3743_FUNCREG_RESET = 0x2F
 
 # Buffer allocation behaviors passed to constructor
 NO_BUFFER = 0x00  # DO NOT buffer pixel data, write pixels as needed
 PREFER_BUFFER = 0x01  # OPTIONALLY buffer pixel data, RAM permitting
 MUST_BUFFER = 0x02  # MUST buffer pixel data, else throw MemoryError
+
+# 198
+NUM_LEDS = 18 * 11
 
 
 class IS31FL3743:
@@ -100,20 +101,20 @@ class IS31FL3743:
                 # (value of 0) so we can i2c.write() from the buffer directly
                 # (don't need a temp/copy buffer to pre-pend the register
                 # address).
-                self._pixel_buffer = bytearray(352)
+                self._pixel_buffer = bytearray(NUM_LEDS + 1)
             except MemoryError:
                 if allocate == MUST_BUFFER:
                     raise
         self.i2c_device = i2c_device.I2CDevice(i2c, address)
         if self._id_reg != 2 * address:
-            raise AttributeError("Cannot find a IS31FL3743 at address 0x", address)
+            raise AttributeError(f"Cannot find a IS31FL3743 at address 0x{address}, found {self._id_reg}")
         self._buf = bytearray(2)
         self._page = None
         self.reset()
 
     def reset(self) -> None:
         """Reset"""
-        self.page = 4
+        self.page = 2
         self._reset_reg = 0xAE
 
     def unlock(self) -> None:
@@ -125,35 +126,32 @@ class IS31FL3743:
 
         :param scale: Scaling level from 0 (off) to 255 (brightest).
         """
-        scalebuf = bytearray([scale] * 181)  # 180 bytes + 1 for reg addr
+        scalebuf = bytearray([scale] * (NUM_LEDS+1))  # LEDs + 1 for reg addr
         scalebuf[0] = 0  # Initial register address
-        self.page = 2
+        self.page = 1
         with self.i2c_device as i2c:
             i2c.write(scalebuf)
-        self.page = 3
-        with self.i2c_device as i2c:
-            i2c.write(scalebuf, end=172)  # 2nd page is smaller
 
     @property
     def global_current(self) -> int:
         """Global current"""
-        self.page = 4
+        self.page = 2
         return self._gcurrent_reg
 
     @global_current.setter
     def global_current(self, current: int) -> None:
-        self.page = 4
+        self.page = 2
         self._gcurrent_reg = current
 
     @property
     def enable(self) -> bool:
         """Enable"""
-        self.page = 4
+        self.page = 2
         return self._shutdown_bit
 
     @enable.setter
     def enable(self, enable: bool) -> None:
-        self.page = 4
+        self.page = 2
         self._shutdown_bit = enable
 
     @property
@@ -165,23 +163,20 @@ class IS31FL3743:
     def page(self, page_value: int) -> None:
         if page_value == self._page:
             return  # already set
-        if page_value > 4:
-            raise ValueError("Page must be 0 ~ 4")
+        if page_value > 2:
+            raise ValueError("Page must be 0 ~ 2")
         self._page = page_value  # cache
         self.unlock()
         self._page_reg = page_value
 
     def __getitem__(self, led: int) -> int:
-        if not 0 <= led <= 350:
-            raise ValueError("LED must be 0 ~ 350")
+        if not 0 <= led < NUM_LEDS:
+            raise ValueError(f"LED must be 0 ~ {NUM_LEDS}")
         if self._pixel_buffer:
             return self._pixel_buffer[1 + led]
-        if led < 180:
-            self.page = 0
-            self._buf[0] = led
-        else:
-            self.page = 1
-            self._buf[0] = led - 180
+
+        self.page = 0
+        self._buf[0] = led
 
         with self.i2c_device as i2c:
             i2c.write_then_readinto(
@@ -194,22 +189,19 @@ class IS31FL3743:
             # Buffered version doesn't require range checks --
             # Python will throw its own IndexError/ValueError as needed.
             self._pixel_buffer[1 + led] = pwm
-        elif 0 <= led <= 350:
+        elif 0 <= led < NUM_LEDS:
             if 0 <= pwm <= 255:
                 # print(led, pwm)
-                if led < 180:
-                    self.page = 0
-                    self._buf[0] = led
-                else:
-                    self.page = 1
-                    self._buf[0] = led - 180
+                self.page = 0
+                self._buf[0] = led
+
                 self._buf[1] = pwm
                 with self.i2c_device as i2c:
                     i2c.write(self._buf)
             else:
                 raise ValueError("PWM must be 0 ~ 255")
         else:
-            raise ValueError("LED must be 0 ~ 350")
+            raise ValueError(f"LED must be 0 ~ {NUM_LEDS}")
 
     def show(self) -> None:
         """Issue in-RAM pixel data to device. No effect if pixels are
@@ -219,21 +211,7 @@ class IS31FL3743:
             self.page = 0
             with self.i2c_device as i2c:
                 # _pixel_buffer[0] is always 0! (First register addr)
-                i2c.write(self._pixel_buffer, start=0, end=181)
-            self.page = 1
-            with self.i2c_device as i2c:
-                # In order to write from pixel buffer directly (without a
-                # whole extra temp buffer), element 180 is saved in a temp var
-                # and replaced with 0 (representing the first regisyer addr on
-                # page 1), then we can i2c.write() directly from that position
-                # in the buffer. Element 180 is restored afterward. This is
-                # the same strategy as used in the Arduino library.
-                # 'end' below is 352 (not 351) because of the extra byte at
-                # the start of the pixel buffer.
-                save = self._pixel_buffer[180]
-                self._pixel_buffer[180] = 0
-                i2c.write(self._pixel_buffer, start=180, end=352)
-                self._pixel_buffer[180] = save
+                i2c.write(self._pixel_buffer)
 
     def write(self, mapping: Tuple, buffer: ReadableBuffer) -> None:
         """

@@ -22,8 +22,8 @@ TODO
 
 - [x] Rename everything to IS31FL3743 (41 to 43)
 - [ ] Remove/fix old examples
-- [ ] add new example
-- [ ] Port driver to 43
+- [x] Add new example
+- [x] Port driver to 43
 - [ ] Upload to pypi
 - [ ] Host docs somewhere
 - [ ] Fix all TODO comments
