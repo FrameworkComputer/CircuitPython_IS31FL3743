@@ -45,16 +45,16 @@ source_suffix = ".rst"
 master_doc = "index"
 
 # General information about the project.
-project = "Adafruit IS31FL3741 Library"
-creation_year = "2021"
+project = "CircuitPython IS31FL3743 Library"
+creation_year = "2023"
 current_year = str(datetime.datetime.now().year)
 year_duration = (
     current_year
     if current_year == creation_year
     else creation_year + " - " + current_year
 )
-copyright = year_duration + " Ladyada"
-author = "Ladyada"
+copyright = year_duration + " Framework Computer"
+author = "Daniel Schaefer"
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -127,7 +127,7 @@ html_static_path = ["_static"]
 html_favicon = "_static/favicon.ico"
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = "AdafruitIS31FL3741Librarydoc"
+htmlhelp_basename = "IS31FL3743Librarydoc"
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -152,8 +152,8 @@ latex_elements = {
 latex_documents = [
     (
         master_doc,
-        "AdafruitIS31FL3741Library.tex",
-        "Adafruit IS31FL3741 Library Documentation",
+        "IS31FL3743Library.tex",
+        "IS31FL3743 Library Documentation",
         author,
         "manual",
     ),
@@ -166,8 +166,8 @@ latex_documents = [
 man_pages = [
     (
         master_doc,
-        "adafruitIS31FL3741library",
-        "Adafruit IS31FL3741 Library Documentation",
+        "IS31FL3743library",
+        "IS31FL3743 Library Documentation",
         [author],
         1,
     )
@@ -181,10 +181,10 @@ man_pages = [
 texinfo_documents = [
     (
         master_doc,
-        "AdafruitIS31FL3741Library",
-        "Adafruit IS31FL3741 Library Documentation",
+        "IS31FL3743Library",
+        "IS31FL3743 Library Documentation",
         author,
-        "AdafruitIS31FL3741Library",
+        "IS31FL3743Library",
         "One line description of project.",
         "Miscellaneous",
     ),

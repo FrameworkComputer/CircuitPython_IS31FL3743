@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2022 Alec Delaney for Adafruit Industries
+# SPDX-FileCopyrightText: 2023 Daniel Schaefer for FrameworkComputer
 #
 # SPDX-License-Identifier: MIT
 
@@ -10,17 +10,17 @@ requires = [
 ]
 
 [project]
-name = "adafruit-circuitpython-is31fl3741"
-description = "CircuitPython library for IS31FL3741 RGB LED matrices."
+name = "circuitpython-is31fl3743"
+description = "CircuitPython library for IS31FL3743 RGB LED matrices."
 version = "0.0.0+auto.0"
 readme = "README.rst"
 authors = [
-    {name = "Adafruit Industries", email = "circuitpython@adafruit.com"}
+    {name = "Daniel Schaefer", email = "dhs@frame.work"}
 ]
-urls = {Homepage = "https://github.com/adafruit/Adafruit_CircuitPython_IS31FL3741"}
+urls = {Homepage = "https://github.com/FrameworkComputer/CircuitPython_IS31FL3743"}
 keywords = [
     "adafruit",
-    "is31fl3741",
+    "is31fl3743",
     "led",
     "matrix",
     "charlieplex",
@@ -41,7 +41,7 @@ classifiers = [
 dynamic = ["dependencies", "optional-dependencies"]
 
 [tool.setuptools]
-packages = ["adafruit_is31fl3741"]
+packages = ["framework_is31fl3743"]
 
 [tool.setuptools.dynamic]
 dependencies = {file = ["requirements.txt"]}
