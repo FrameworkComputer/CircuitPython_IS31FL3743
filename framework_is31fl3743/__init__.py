@@ -107,7 +107,9 @@ class IS31FL3743:
                     raise
         self.i2c_device = i2c_device.I2CDevice(i2c, address)
         if self._id_reg != 2 * address:
-            raise AttributeError(f"Cannot find a IS31FL3743 at address 0x{address}, found {self._id_reg}")
+            raise AttributeError(
+                f"Cannot find a IS31FL3743 at address 0x{address}, found {self._id_reg}"
+            )
         self._buf = bytearray(2)
         self._page = None
         self.reset()
@@ -126,7 +128,7 @@ class IS31FL3743:
 
         :param scale: Scaling level from 0 (off) to 255 (brightest).
         """
-        scalebuf = bytearray([scale] * (NUM_LEDS+1))  # LEDs + 1 for reg addr
+        scalebuf = bytearray([scale] * (NUM_LEDS + 1))  # LEDs + 1 for reg addr
         scalebuf[0] = 0  # Initial register address
         self.page = 1
         with self.i2c_device as i2c:
