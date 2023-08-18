@@ -17,17 +17,6 @@ CircuitPython driver for the IS31FL3743 RGB Matrix IC.
 
 This driver supports the following hardware: Lumissil IS31FL3743 LED controller.
 
-TODO
-====
-
-- [x] Rename everything to IS31FL3743 (41 to 43)
-- [ ] Remove/fix old examples
-- [x] Add new example
-- [x] Port driver to 43
-- [ ] Upload to pypi
-- [ ] Host docs somewhere
-- [ ] Fix all TODO comments
-
 
 Dependencies
 =============
@@ -76,8 +65,7 @@ Matrix:
     import busio
     with busio.I2C(board.SCL, board.SDA) as i2c:
         display = Matrix(i2c)
-        # TODO
-        display.fill(127)
+        display.fill(18 * 11)
 
 
 Documentation
